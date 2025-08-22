@@ -64,7 +64,7 @@ public class Sistema {
         System.out.println("Digite o nome do produto procurado:");
         String nomeProduto = scanner.nextLine();
 
-        for(int i=0; i <produtos.size() -1; i++) {
+        for(int i=0; i <=produtos.size(); i++) {
             if(produtos.get(i).getNome().equalsIgnoreCase(nomeProduto)) {
                 System.out.println("Produto Encontrado");
                 System.out.println(produtos.get(i));
