@@ -1,3 +1,5 @@
+package loja;
+
 import java.util.Objects;
 
 public class Produto {
@@ -42,7 +44,7 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "Produto [nome=" + nome + ", preco=" + preco + ", quantidade=" + quantidade + "]";
+        return "loja.Produto [nome=" + nome + ", preco=" + preco + ", quantidade=" + quantidade + "]";
     }
 
     @Override

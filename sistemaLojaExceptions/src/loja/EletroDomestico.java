@@ -1,3 +1,5 @@
+package loja;
+
 public class EletroDomestico extends Produto{
     private int voltagem;
 

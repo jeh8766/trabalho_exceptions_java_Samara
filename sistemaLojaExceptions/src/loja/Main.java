@@ -1,19 +1,27 @@
+package loja;
+
 import java.util.Scanner;
 
 public class Main {
-     public static void main(String[] args) {
+    public static void main(String[] args) {
 
-            Sistema sistema = new Sistema();
-            Scanner scanner = new Scanner(System.in);
-            int opcao;
+        Sistema sistema = new Sistema();
+        Scanner scanner = new Scanner(System.in);
+        int opcao = 0;
 
-            do {
+        do {
+            try {
                 System.out.println("Digite a opção desejada:");
-                System.out.println("1 - Adicionar");
+                System.out.println("1- Adicionar");
                 System.out.println("2 - Listar");
                 System.out.println("3 - Buscar");
                 System.out.println("4 - Remover");
-                System.out.println("5 - Sair");
+                System.out.println("5- Sair");
+                if (!scanner.hasNextInt()){
+                    scanner.nextLine();
+                    throw new OpcaoInvalidaException("Entrada invalida, digite um número");
+                }
+
                 opcao = scanner.nextInt();
                 scanner.nextLine();
 
@@ -33,12 +41,13 @@ public class Main {
                     case 5:
                         break;
                     default:
-                        System.out.println("Opção inválida!");
-                        break;
+                        throw new OpcaoInvalidaException("Opção invalida, escolha entre 1 e 5");
                 }
 
-            } while (opcao != 5);
-
-            System.out.println("Saindo do Sistema!");
-        }
+            } catch (OpcaoInvalidaException e) {
+                System.out.println("Erro: " + e.getMessage());
+            }
+        }while (opcao != 5);
+        System.out.println("Voce saiu do sistema");
     }
+}

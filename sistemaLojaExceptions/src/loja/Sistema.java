@@ -1,6 +1,8 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+package loja;
 
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 public class Sistema {
 
@@ -15,10 +17,14 @@ public class Sistema {
         String nome = scanner.nextLine();
 
         System.out.println("Digite o preço do produto: ");
-        Double preco = scanner.nextDouble();
+        double preco = scanner.nextDouble();
 
         System.out.println("Digite a quantidade em estoque do produto: ");
-        Double qnt = scanner.nextDouble();
+        double qnt = scanner.nextDouble();
+
+        if (preco < 0 || qnt < 0) {
+            throw new IllegalArgumentException("");
+        }
 
         System.out.println("Digite o tipo do produto");
         System.out.println("1- Móvel");
@@ -27,11 +33,11 @@ public class Sistema {
         int opcaoTipo = scanner.nextInt();
         scanner.nextLine();
 
-        if(opcaoTipo == 1) {
+        if (opcaoTipo == 1) {
             cadastrarMovel(scanner, nome, preco, qnt);
-        }else if(opcaoTipo == 2) {
+        } else if (opcaoTipo == 2) {
             cadastrarEletro(scanner, nome, preco, qnt);
-        }else {
+        } else {
             System.out.println("Opção Inválida!");
         }
     }
@@ -41,19 +47,26 @@ public class Sistema {
         String categoria = scanner.nextLine();
         Movel movel = new Movel(nome, preco, quantidade, categoria);
         produtos.add(movel);
+        System.out.println("Móvel cadastrado com sucesso!");
     }
 
     private void cadastrarEletro(Scanner scanner, String nome, double preco, double quantidade) {
         System.out.println("Digite a voltagem:");
         int voltagem = scanner.nextInt();
+
+        if (voltagem != 110 && voltagem != 220) {
+            throw new IllegalArgumentException("Selecione uma voltagem compativel (110 ou 220)");
+        }
+
         EletroDomestico eletro = new EletroDomestico(nome, preco, quantidade, voltagem);
         produtos.add(eletro);
+        System.out.println("Eletrodoméstico cadastrado com sucesso!");
     }
 
     public void listar() {
-        if(produtos.size() == 0) {
-            System.out.println("Não há produtos cadastrados");
-        }else {
+        if (produtos.isEmpty()) {
+            System.out.println("Não há produtos cadastrados.");
+        } else {
             for (Produto produto : produtos) {
                 System.out.println(produto);
             }
@@ -64,25 +77,24 @@ public class Sistema {
         System.out.println("Digite o nome do produto procurado:");
         String nomeProduto = scanner.nextLine();
 
-        for(int i=0; i <=produtos.size(); i++) {
-            if(produtos.get(i).getNome().equalsIgnoreCase(nomeProduto)) {
-                System.out.println("Produto Encontrado");
-                System.out.println(produtos.get(i));
-                return produtos.get(i);
+        for (Produto produto : produtos) {
+            if (produto.getNome().equalsIgnoreCase(nomeProduto)) {
+                System.out.println("loja.Produto Encontrado");
+                System.out.println(produto);
+                return produto;
             }
         }
-        System.out.println("Produto não cadastrado!");
-        return null;
+
+        throw new NoSuchElementException("loja.Produto não encontrado: " + nomeProduto);
     }
 
     public void remover(Scanner scanner) {
-        Produto prod = buscar(scanner);
-        if(prod == null) {
-            System.out.println("Produto não cadastrado!");
-        }else {
+        try {
+            Produto prod = buscar(scanner);
             produtos.remove(prod);
-            System.out.println("Produto removido!");
+            System.out.println("loja.Produto removido com sucesso!");
+        } catch (NoSuchElementException e) {
+            System.out.println(e.getMessage());
         }
     }
-
 }

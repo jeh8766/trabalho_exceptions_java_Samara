@@ -1,3 +1,5 @@
+package loja;
+
 public class Movel extends Produto {
 
     String categoria;
