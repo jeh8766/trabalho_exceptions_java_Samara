@@ -1,6 +1,9 @@
 package loja;
 
+import excecoes.TipoInvalidoException;
+
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -12,34 +15,34 @@ public class Sistema {
         this.produtos = new ArrayList<Produto>();
     }
 
-    public void cadastrar(Scanner scanner) {
-        System.out.println("Digite o nome do produto: ");
-        String nome = scanner.nextLine();
+    public void cadastrar(Scanner scanner) throws TipoInvalidoException {
+            System.out.println("Digite o nome do produto: ");
+            String nome = scanner.nextLine();
 
-        System.out.println("Digite o preço do produto: ");
-        double preco = scanner.nextDouble();
+            System.out.println("Digite o preço do produto: ");
+            double preco = scanner.nextDouble();
 
-        System.out.println("Digite a quantidade em estoque do produto: ");
-        double qnt = scanner.nextDouble();
+            System.out.println("Digite a quantidade em estoque do produto: ");
+            double qnt = scanner.nextDouble();
 
-        if (preco < 0 || qnt < 0) {
-            throw new IllegalArgumentException("");
-        }
+            if (preco < 0 || qnt < 0) {
+                throw new IllegalArgumentException("");
+            }
+            System.out.println("Digite o número correspondente ao tipo do produto");
+            System.out.println("1- Móvel");
+            System.out.println("2- Eletro");
 
-        System.out.println("Digite o tipo do produto");
-        System.out.println("1- Móvel");
-        System.out.println("2- Eletro");
+            int opcaoTipo = scanner.nextInt();
+            scanner.nextLine();
 
-        int opcaoTipo = scanner.nextInt();
-        scanner.nextLine();
+            if (opcaoTipo == 1) {
+                cadastrarMovel(scanner, nome, preco, qnt);
+            } else if (opcaoTipo == 2) {
+                cadastrarEletro(scanner, nome, preco, qnt);
+            } else if (opcaoTipo!=1 && opcaoTipo!=2){
+                throw new TipoInvalidoException("Número inválido! Apenas 1 ou 2");
+            }
 
-        if (opcaoTipo == 1) {
-            cadastrarMovel(scanner, nome, preco, qnt);
-        } else if (opcaoTipo == 2) {
-            cadastrarEletro(scanner, nome, preco, qnt);
-        } else {
-            System.out.println("Opção Inválida!");
-        }
     }
 
     private void cadastrarMovel(Scanner scanner, String nome, double preco, double quantidade) {

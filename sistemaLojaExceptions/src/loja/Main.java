@@ -1,5 +1,8 @@
 package loja;
 
+import excecoes.OpcaoInvalidaException;
+import excecoes.TipoInvalidoException;
+
 import java.util.Scanner;
 
 public class Main {
@@ -27,7 +30,11 @@ public class Main {
 
                 switch (opcao) {
                     case 1:
-                        sistema.cadastrar(scanner);
+                        try{
+                            sistema.cadastrar(scanner);
+                        } catch (TipoInvalidoException e){
+                            System.out.println(e.getMessage());
+                        }
                         break;
                     case 2:
                         sistema.listar();
